@@ -12,9 +12,7 @@ import tkinter as tk
 from gui.main_window import MainWindow
 
 def main():
-    """Sākt aplikāciju"""
     root = tk.Tk()
-    root.title("Skaitļu Rezināšanas Spēle")
     app = MainWindow(root)
     root.mainloop()
 

@@ -66,22 +66,20 @@ class GameTree:
         Returns:
             Node: The expanded node
         """
-        # Base case: pātraukt izpēti, ja dziļums ir 0 vai tā ir mērķa virsotne
         if depth <= 0 or node.state.is_terminal():
             return node
         
         possible_moves = [2, 3]
+        engine = GameEngine(node.state.current_number, node.state.current_player)
         
         for move in possible_moves:
-            temp_engine = GameEngine(node.state.current_number, node.state.current_player)
-            temp_engine.state = node.state.copy()
-            
-            if temp_engine.make_move(move):
-                child_node = Node(temp_engine.state.copy(), move=move, parent=node)
+            engine.state = node.state.copy()
+            if engine.make_move(move):
+                child_node = Node(engine.state.copy(), move=move, parent=node)
                 node.add_child(child_node)
                 self.nodes_count += 1
                 self.expand_node(child_node, depth - 1)
-            
+        
         return node
     
     def print_tree(self, node=None, depth=0, prefix=""):
@@ -110,7 +108,7 @@ class GameTree:
         # Izvadīt virsotni
         print(f"{indent}{move_info} {current_number} | {player_points}")
         
-        # Izmantot rekursiju, lai izprintētu visus pēctečus palielinot dziļumu par 1 katru reizi, kas funkcija tiek izpildīta
+        # Izmantot rekursiju, lai izprintētu visus pēctečus palielinot dziļumu par 1 katru reizi, kad funkcija tiek izpildīta
         for child in node.children:
             self.print_tree(child, depth + 1)
     

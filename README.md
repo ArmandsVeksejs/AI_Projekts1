@@ -3,7 +3,9 @@
 ## Darba sākšana
 
 ### 1. Lejupielādējiet projektu (Clone)
-
+```
+git clone https://github.com/ArmandsVeksejs/AI_Projekts1.git
+```
 ### 2. Branch izveide
 - Vispirms izveidojiet jaunu zaru no galvenās koda bāzes (nosaukums "master")
 - Branch sniedziet aprakstošu nosaukumu:

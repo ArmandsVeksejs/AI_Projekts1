@@ -13,11 +13,11 @@ class Node:
     
     def __init__(self, state, move=None, parent=None):
         """
-        Virsotnes inicializēšana.
+        Inicializẽ virsotni.
         
         Args:
-            state (GameState): spēles stāvoklis
-            move (int, optional): loks (spēles gājiens)
+            state (GameState): spēles pašreizējais stāvoklis
+            move (int, optional): kāds gājiens tika veikts
             parent (Node, optional): priekštecis
         """
         self.state = state
@@ -35,63 +35,51 @@ class Node:
         self.children.append(child_node)
         
     def __str__(self):
-        """Virsotnes teksta reprezentācija."""
+        """
+        Metode `__str__` nosaka, kā objektu izvadīt teksta formā.
+
+        Returns:
+            String: Virsotne teksta formā
+        """
         move_str = f" (gājiens: ×{self.move})" if self.move else ""
         return f"Node{move_str}: {self.state}"
 
 class GameTree:
-    """
-    Spēles koks dažādu spēles stāvokļu izpētei.
-    """
-    
     def __init__(self, initial_state):
         """
-        Jauna spēles koka izveide.
+        Inicializē spēles koku.
         
         Args:
             initial_state (GameState): spēles sākuma stāvoklis
         """
         self.root = Node(initial_state)
-        # Virsotņu skaits priekš statistikas
         self.nodes_count = 1
     
     def expand_node(self, node, depth=1):
         """
-        Expand a node to a certain depth.
+        Ğenerē spēles koku līdz noteiktam dziļumam.
         
         Args:
-            node (Node): The node to expand
-            depth (int): How many levels to expand
+            node (Node): virsotne, ko izpētīt
+            depth (int): dziļums
             
         Returns:
             Node: The expanded node
         """
-        # Base case: if depth is 0 or node is terminal, stop expansion
+        # Base case: pātraukt izpēti, ja dziļums ir 0 vai tā ir mērķa virsotne
         if depth <= 0 or node.state.is_terminal():
             return node
         
-        # Get possible moves from this state
-        possible_moves = [2, 3]  # Can multiply by 2 or 3
+        possible_moves = [2, 3]
         
-        # Create a temporary game engine to apply moves
-        engine = GameEngine(node.state.current_number, node.state.current_player)
-        engine.state = node.state.copy()  # Use a copy of the node's state
-        
-        # For each possible move
         for move in possible_moves:
-            # Create a copy of the current state
-            temp_engine = GameEngine(engine.state.current_number, engine.state.current_player)
-            temp_engine.state = engine.state.copy()
+            temp_engine = GameEngine(node.state.current_number, node.state.current_player)
+            temp_engine.state = node.state.copy()
             
-            # Apply the move
             if temp_engine.make_move(move):
-                # Create a new node for the resulting state
                 child_node = Node(temp_engine.state.copy(), move=move, parent=node)
-                # Add the child to the current node
                 node.add_child(child_node)
-                # Increment node count
                 self.nodes_count += 1
-                # Recursively expand the child node
                 self.expand_node(child_node, depth - 1)
             
         return node

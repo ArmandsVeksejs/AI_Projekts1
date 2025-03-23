@@ -85,7 +85,7 @@ class GameTree:
     def print_tree(self, node=None, depth=0, prefix=""):
         """
         Spēles koka izvade vizuālā formātā (2D teksts).
-        
+
         Args:
             node (Node, optional): Virsotne, no kuras sākt izvadīt koku
             depth (int): Pašreizējais dziļums
@@ -94,21 +94,23 @@ class GameTree:
         
         if node is None:
             node = self.root
-        
+
         # Ar katru līmeni pievienot tab simbolu
         indent = "\t" * depth
-        
+
+        # Aprēķināt Dators - Cilvēks atšķirību
+        score_diff = node.state.computer_points - node.state.human_points
+
         # Virsotnes stāvokļa informācija izvade
-        current_number = f"Skaitlis: {node.state.current_number}"
-        player_points = f"Cilvēks: {node.state.human_points} | Dators: {node.state.computer_points}"
-        
+        current_number = f"Skaitlis: {node.state.current_number} ({score_diff})"
+
         # Izvadīt kustību (x2 vai x3)
         move_info = f"[×{node.move}]" if node.move else "[Sākums]"
-        
+
         # Izvadīt virsotni
-        print(f"{indent}{move_info} {current_number} | {player_points}")
-        
-        # Izmantot rekursiju, lai izprintētu visus pēctečus palielinot dziļumu par 1 katru reizi, kad funkcija tiek izpildīta
+        print(f"{indent}{move_info} {current_number}")
+
+        # Rekursīvi izvadīt bērnus
         for child in node.children:
             self.print_tree(child, depth + 1)
     

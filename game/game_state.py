@@ -1,5 +1,5 @@
 """
-Klase spēles stāvokļa saglabāšanai
+Glabā datus par spēles pašreizējo stāvokli (rezultāti, pašreizējais spēlētājs utt.)
 
 Attributes:
     current_number (int): pašreizējais rezultāts
@@ -13,11 +13,11 @@ class GameState:
     
     def __init__(self, starting_number, first_player='cilvēks'):
         """
-        Sākuma stāvokļa inicializēšana
-        
+        Inicializē GameState
+
         Args:
             starting_number (int): skaitlis (rezultāts), ar ko sākt spēli
-            first_player (str): kas iet pirmais (dators vai cilvēks), uzd nosacījumos šis ir cilvēks
+            first_player (str): kas iet pirmais (dators vai cilvēks), uzd nosacījumos šis ir cilvēks, tpc šeit tas norādīts kā default
         """
         self.current_number = starting_number
         self.human_points = 0
@@ -27,7 +27,10 @@ class GameState:
     
     def is_terminal(self):
         """
-        Pārbauda vai spēle ir sasniegusi mērķa stāvokli (rezultāts >= 1000)
+        Pārbauda vai spēle beigusies. Spēle beidzas, kā tikko ir iegūts skaitlis, kas ir lielāks vai vienāds ar 1000.
+
+        Returns:
+            bool: True ja sasniegusi, False ja ne
         """
         return self.current_number >= 1000
     
@@ -36,7 +39,7 @@ class GameState:
     
     def copy(self):
         """
-        Izveidot neatkarīgu spēles stāvokļa kopiju. Bez kopēšanas
+        Izveido spēles stāvokļa kopiju.
         
         Returns:
             GameState: A new identical game state
@@ -49,10 +52,10 @@ class GameState:
     
     def __str__(self):
         """
-        Spēles stāvoklis teksta formā
-        
+        Metode `__str__` nosaka, kā objektu izvadīt teksta formā.
+
         Returns:
-            str: spēles stāvoklis teksta formā
+            String: Spēles stāvoklis teksta formā.
         """
         return (f"Number: {self.current_number}, "
                 f"Human: {self.human_points} points, "

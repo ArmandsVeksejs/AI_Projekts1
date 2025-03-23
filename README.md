@@ -19,6 +19,21 @@
 ### 3. Veiciet izmaiņas
 - Veiciet savas koda izmaiņas šajā atsevišķajā zarā
 - Koncentrējieties uz vienu funkcionalitātes ieviešanu vai kļūdas izlabošanu katrā branch
+- Kad definējiet funkcijas, izveidojat komentārus atbilstoši paraugam:
+```python
+def function_name(param1, param2, param3=None):
+    """
+    Izskaidro, ko funckijas dara.
+
+    Args:
+        param1 (type): param1 raksturojums
+        param2 (type): param2 raksturojums
+        param3 (type, optional): param3 raksturojums, pēc noklusējuma None. Optional ja funkciju var palaist bez šī argumenta.
+
+    Returns:
+        return_type: izvadītās vērtības apraksts
+    """
+```
 
 ### 4. Saglabājiet izmaiņas (Commit)
 ```

@@ -28,4 +28,4 @@ if __name__ == "__main__":
     start.human_points = 1
     start.computer_points = 3
 
-    print("Heuristikas rezultāts:", heuristic(start)) #Rezultāts: 2 tad cilvēkam labāka pozīcija (sakuma)
+    print("Heuristikas rezultāts:", heuristic(start)) #Rezultāts: 2 (3-1) tad cilvēkam labāka pozīcija (sakuma)

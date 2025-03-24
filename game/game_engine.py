@@ -13,7 +13,6 @@ class GameEngine:
             starting_number (int): skaitlis ar ko sākas spēle. Diapazonā no 5 līdz 15.
             first_player (str): kas iet pirmais ('cilvēks' vai 'dators')
         """
-        # TODO: Uzlikt limitu skaitļa diapazonam.
         self.state = GameState(starting_number, first_player)
     
     def make_move(self, multiplier):

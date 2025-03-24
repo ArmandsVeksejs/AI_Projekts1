@@ -12,7 +12,7 @@ def heuristic(state):
         elif state.human_points > state.computer_points:
             return float('-inf')  # Dators uzvarejis
         else:
-            return 0  # Neizšķirts
+            return 0 # Neizšķirts
 
     # Preteja starpiba, jo mazaks punktu skaits ir labak
     # Ja spele vel nav gala, noverte punktu starpibu

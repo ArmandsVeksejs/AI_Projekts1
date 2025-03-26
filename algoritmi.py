@@ -1,5 +1,38 @@
-def alpha_beta():
-    pass
+from game import GameState
+
+MAX, MIN = 1000, -1000
+
+def alpha_beta(depth, state: GameState, maximizing_player: bool, alpha, beta):
+    # Pārbaude – vai sasniegts spēles beigu stāvoklis
+    if state.number >= 1000 or depth == 0:
+        return heuristic(state)
+
+    # MAX spēlētājs (AI)
+    if maximizing_player:
+        best = MIN
+        #Iegūstam visus nākamos iespējamos stāvokļus, reizinot ar 2 vai 3
+        for child in state.generate_next_states():
+            #rekurzīvi dodamies uz bērnu virsotni,ejot 1 līmeni dziļāk,Nākamais gājiens būs cilvēkam (MIN), tāpēc False
+            child_score = alpha_beta(depth - 1, child, False, alpha, beta)
+            #AI izvelas maksimālo no visiem child_score
+            best = max(best, child_score)
+            #labākais, ko līdz šim atradis MAX spēlētājs
+            alpha = max(alpha, best)
+            #konflikta pārbaude
+            if beta <= alpha:
+                break
+        return best
+
+    #MIN spēlētājs (Cilvēks)
+    else:
+        best = MAX
+        for child in state.generate_next_states():
+            child_score = alpha_beta(depth - 1, child, True, alpha, beta)
+            best = min(best,child_score)
+            beta = min(beta, best)
+            if beta <= alpha:
+                break
+        return best
 
 def minimax():
     pass
@@ -51,3 +84,13 @@ def heuristic(self):
 
     # Apvieno gan immediate gan strategic faktorus.
     return immediate_value + strategic_value
+
+def get_best_move(state: GameState, depth: int):
+    best_child_score = MIN
+    best_state = None
+    for child in state.generate_next_states():
+        move_child_score = alpha_beta(depth - 1, child, False, MIN, MAX)
+        if move_child_score > best_child_score:
+            best_child_score = move_child_score
+            best_state = child
+    return best_state

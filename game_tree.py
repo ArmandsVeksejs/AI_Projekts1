@@ -38,21 +38,3 @@ class GameState:
             return self.human_score + score_change, self.ai_score
         else:
             return self.human_score, self.ai_score + score_change
-    
-def print_game_tree(state, max_depth, current_depth=0, prefix=""):
-    
-    print(f"{prefix}Move {current_depth}: Skaitlis({state.number}), Cilvēks({state.human_score}), Ai({state.ai_score})")
-    
-    if current_depth >= max_depth:
-        return
-    
-    next_states = state.generate_next_states()
-
-    # AI uzģenerēts
-    for i in range(len(next_states)):
-        if i == len(next_states) - 1:
-            branch_prefix = "└── "  # Last branch
-        else:
-            branch_prefix = "├── "  # Intermediate branch
-        
-        print_game_tree(next_states[i], max_depth, current_depth + 1, prefix + branch_prefix)

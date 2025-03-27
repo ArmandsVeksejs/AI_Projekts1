@@ -1,8 +1,54 @@
-def alpha_beta():
-    pass
+from game_tree import GameState
 
-def minimax():
-    pass
+MAX, MIN = 1000, -1000
+
+def minimax(depth, state: GameState, maximizing_player: bool):
+    if state.number >= 1000 or depth == 0:
+        return heuristic(state), None
+
+    best_move = None
+
+    if maximizing_player:
+        best = MIN
+        for child in state.generate_next_states():
+            child_score, _ = minimax(depth - 1, child, False)
+            if child_score > best:
+                best = child_score
+                best_move = child
+        return best, best_move
+
+    else:
+        best = MAX
+        for child in state.generate_next_states():
+            child_score, _ = minimax(depth - 1, child, True)
+            if child_score < best:
+                best = child_score
+                best_move = child
+        return best, best_move
+
+def alpha_beta(depth, state: GameState, maximizing_player: bool, alpha, beta):
+    if state.number >= 1000 or depth == 0:
+        return heuristic(state)
+
+    if maximizing_player:
+        best = MIN
+        for child in state.generate_next_states():
+            child_score = alpha_beta(depth - 1, child, False, alpha, beta)
+            best = max(best, child_score)
+            alpha = max(alpha, best)
+            if beta <= alpha:
+                break
+        return best
+
+    else:
+        best = MAX
+        for child in state.generate_next_states():
+            child_score = alpha_beta(depth - 1, child, True, alpha, beta)
+            best = min(best,child_score)
+            beta = min(beta, best)
+            if beta <= alpha:
+                break
+        return best
 
 def heuristic(self):
     # Mērķis - mazāks punktu skaits nekā pretiniekam
@@ -15,7 +61,7 @@ def heuristic(self):
     proximity_to_end = min(1.0, self.number / 500)
     # Kad skaitlis = 50: proximity_to_end = 0,1 (10% no 500)
     # Kad skaitlis = 250: proximity_to_end = 0,5 (50% no 500)
-    # Ja skaits = 500 vai lielāks: proximity_to_end = 1,0 (sasniegta maksimālā ietekme, jo nākamajā gājienā spēle beigsies.
+    # Ja skaitlis = 500 vai lielāks: proximity_to_end = 1,0 (sasniegta maksimālā ietekme, jo nākamajā gājienā spēle beigsies.
 
     # Nepāra skaitļi ir stratēģiski ļoti vērtīgi it īpaši spēles sākumā, jo:
     # Nepāra skaitlis × 3 = vēl viens nepāra skaitlis

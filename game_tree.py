@@ -10,10 +10,14 @@ class GameState:
     def __repr__(self):
         return f"Skaitlis={self.number}, Cilvēka punkti={self.human_score}, Datora punkti={self.ai_score}, Dziļums={self.depth}, Vai cilvēka gājiens={self.is_human_turn}"
     
-    def generate_next_states(self):
+    def generate_next_states(self, raw=False):
         next_states = []
-        for multiplier in [2,3]:
+        for multiplier in [2, 3]:
             new_number = self.number * multiplier
+        # Ja "raw" nav ieslēgts un rezultāts pārsniedz 1000 – ignorē šo gājienu
+        # Tādējādi spēles laikā tiek ignorēti nedērīgi gājieni
+            if not raw and new_number > 1000:
+                continue
             new_human_score, new_ai_score = self.calculate_scores(new_number)
             next_states.append(
                 GameState(

@@ -39,16 +39,22 @@ def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
 def process_human_turn(current_state):
     multiplier = cli_ui.get_human_move()
     
-    next_states = current_state.generate_next_states()
-    new_state = None
-    
-    for state in next_states:
-        if state.number == current_state.number * multiplier:
-            new_state = state
-            break
-    
+    new_number = current_state.number * multiplier
+    # Skaitlis var būt arī > 1000 – cilvēkam atļauts
+    new_human_score, new_ai_score = current_state.calculate_scores(new_number)
+
+    new_state = GameState(
+        new_number,
+        human_score=new_human_score,
+        ai_score=new_ai_score,
+        depth=current_state.depth + 1,
+        is_human_turn=False,  # pēc cilvēka nāk AI
+        parent=current_state
+    )
+
     cli_ui.display_human_move(new_state, multiplier)
     return new_state
+
 
 def process_ai_turn(current_state, max_depth, use_minimax, use_alpha_beta):
     cli_ui.prompt_for_ai_move()
@@ -72,7 +78,8 @@ def process_ai_turn(current_state, max_depth, use_minimax, use_alpha_beta):
 def get_best_move(state: GameState, depth: int, use_minimax: bool, use_alpha_beta: bool):
     best_child_score = algoritmi.MIN
     best_state = None
-    for child in state.generate_next_states():
+
+    for child in sorted(state.generate_next_states(raw=True), key=lambda x: x.number):
         if use_alpha_beta:
             move_child_score = algoritmi.alpha_beta(depth - 1, child, False, algoritmi.MIN, algoritmi.MAX)
         elif use_minimax:
@@ -80,7 +87,15 @@ def get_best_move(state: GameState, depth: int, use_minimax: bool, use_alpha_bet
         else:
             raise ValueError("Kļūda! Ievadi 2 vai 3!!!")
 
-        if move_child_score > best_child_score:
-            best_child_score = move_child_score
-            best_state = child
+        # Atļaujam gājienus >1000 TIKAI, ja tie dod uzvaru
+        if child.number > 1000:
+            if child.ai_score < child.human_score:
+                if move_child_score > best_child_score or best_state is None:
+                    best_child_score = move_child_score
+                    best_state = child
+        else:
+            if move_child_score > best_child_score or best_state is None:
+                best_child_score = move_child_score
+                best_state = child
+
     return best_state

@@ -51,10 +51,12 @@ def display_game_end(state):
         print("Neizšķirts!")
 
 def display_game_tree(state, max_depth, current_depth=0, prefix=""):
-    print("Spēles koks:")
+    if current_depth == 0:
+        print("Spēles koks:")
+        
     print(f"{prefix}Move {current_depth}: Skaitlis({state.number}), Cilvēks({state.human_score}), Ai({state.ai_score})")
     
-    if current_depth >= max_depth:
+    if current_depth >= max_depth or state.number >= 1000:
         return
     
     next_states = state.generate_next_states()

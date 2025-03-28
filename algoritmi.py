@@ -50,15 +50,15 @@ def alpha_beta(depth, state: GameState, maximizing_player: bool, alpha, beta):
                 break
         return best
 
-def heuristic(self):
+def heuristic(state):
     # Mērķis - mazāks punktu skaits nekā pretiniekam
     # Viss, kas tiecas pretī šim mērķim dod pozitīvu vērtību
     # Pretinieks - spēlētājs, kurš nesāka spēli
-    score_difference = self.ai_score - self.human_score
+    score_difference = state.human_score - state.ai_score
 
     # Izveido vērtību no 0 līdz 1, kas norāda, cik tuvu mēs esam spēles beigu stāvoklim (1000).
     # Spēle tiek sadalīta fāzēs, pamatojoties uz pašreizējo skaitli.
-    proximity_to_end = min(1.0, self.number / 500)
+    proximity_to_end = min(1.0, state.number / 500)
     # Kad skaitlis = 50: proximity_to_end = 0,1 (10% no 500)
     # Kad skaitlis = 250: proximity_to_end = 0,5 (50% no 500)
     # Ja skaitlis = 500 vai lielāks: proximity_to_end = 1,0 (sasniegta maksimālā ietekme, jo nākamajā gājienā spēle beigsies.
@@ -68,8 +68,8 @@ def heuristic(self):
     # Ar nepāra skaitļiem var vienmēr zaudēt punktus.
     # Spēlētājam, kurš pirmais iegūst nepāra skaitli, ir priekšrocība, ja to iegūst jau uzreiz spēles sākumā, tad zaudēt nav iespējams.
     parity_advantage = 0
-    if self.number % 2 == 1:
-        if self.is_human_turn:
+    if state.number % 2 == 1:
+        if state.is_human_turn:
             parity_advantage = 0.7
         else:
             parity_advantage = -0.7  # SLIKTI! AI var izmantot nepāra skaitli lai samazinātu sev rezultātu
@@ -79,8 +79,8 @@ def heuristic(self):
     # Pāra skaitļi vienmēr dod +1 punktu (šajā spēlē tas ir slikti).
     # Nākamais spēlētājs tiek “iesprostots”, punktu palielināšanā.
     future_options = 0
-    if self.number % 2 == 0:  # AI tiks spiests iegūt +1 punktu nākamajā gājienā.
-        if self.is_human_turn:  # LABI! AI būs spiests saņemt +1 punktu nākamajā gājienā
+    if state.number % 2 == 0:  # AI tiks spiests iegūt +1 punktu nākamajā gājienā.
+        if state.is_human_turn:  # LABI! AI būs spiests saņemt +1 punktu nākamajā gājienā
             future_options = 0.5
         else:  # SLIKTI! Cilvēks būs spiests saņemt +1 punktu nakamajā gājienā
             future_options = -0.5

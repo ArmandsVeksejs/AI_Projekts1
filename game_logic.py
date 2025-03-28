@@ -3,10 +3,10 @@ import algoritmi
 import cli_ui
 
 def initialize_game():
-    initial_state = GameState(number=5, is_human_turn=False)
+    initial_state = GameState(number=6, is_human_turn=False)
     max_depth = 7
     
-    # cli_ui.display_game_tree(initial_state, max_depth)
+    cli_ui.display_game_tree(initial_state, max_depth)
     # Atkomentēt, ja gribat redzēt pilno spēles koku
     
     use_alpha_beta, use_minimax = cli_ui.get_algorithm_choice()

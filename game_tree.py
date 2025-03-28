@@ -38,3 +38,4 @@ class GameState:
             return self.human_score + score_change, self.ai_score
         else:
             return self.human_score, self.ai_score + score_change
+    

@@ -1,3 +1,24 @@
+def get_starting_number():
+    while True:
+        try:
+            initial_number = int(input("Ievadi sākuma skaitli: ").strip())
+            if initial_number > 0:
+                return initial_number
+            else:
+                print("Skaitlim jābūt pozitīvam.")
+        except ValueError:
+            print("Lūdzu, ievadi derīgu skaitli.")
+
+def get_starting_player():
+    while True:
+        starter = input("Kas sāk spēli? (1 - Cilvēks, 2 - Dators): ").strip()
+        if starter == "1":
+            return True
+        elif starter == "2":
+            return False
+        else:
+            print("Nederīga ievade. Lūdzu, ievadi 1 vai 2.")
+
 def get_algorithm_choice():
     print("Izvēlies algoritmu:")
     print("1 - Alpha-Beta")

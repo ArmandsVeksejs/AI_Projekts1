@@ -6,9 +6,6 @@ class GameState:
         self.depth = depth
         self.is_human_turn = is_human_turn
         self.parent = parent
-
-    def __repr__(self):
-        return f"Skaitlis={self.number}, Cilvēka punkti={self.human_score}, Datora punkti={self.ai_score}, Dziļums={self.depth}, Vai cilvēka gājiens={self.is_human_turn}"
     
     # AI izmanto šo
     def generate_next_states(self):

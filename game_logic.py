@@ -3,11 +3,13 @@ import algoritmi
 import cli_ui
 
 def initialize_game():
-    initial_state = GameState(number=6, is_human_turn=False)
+    initial_number = cli_ui.get_starting_number()
+    is_human_turn = cli_ui.get_starting_player()
+    initial_state = GameState(number=initial_number, is_human_turn=is_human_turn)
     max_depth = 7
     
-    cli_ui.display_game_tree(initial_state, max_depth)
-    # Atkomentēt, ja gribat redzēt pilno spēles koku
+    # Comment/uncomment as needed to show game tree
+    # cli_ui.display_game_tree(initial_state, max_depth)
     
     use_alpha_beta, use_minimax = cli_ui.get_algorithm_choice()
     

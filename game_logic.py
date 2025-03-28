@@ -1,6 +1,7 @@
 from game_tree import GameState
 import algoritmi
 import cli_ui
+import time
 
 def initialize_game():
     initial_number = cli_ui.get_starting_number()
@@ -19,11 +20,15 @@ def initialize_game():
 
 def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
     current_state = initial_state
+    total_ai_time = 0
+    ai_moves = 0
     
     while current_state.number < 1000:
         if current_state.is_human_turn:
             current_state = process_human_turn(current_state)
         else:
+            start_time = time.time()
+            
             new_state = process_ai_turn(
                 current_state, 
                 max_depth, 
@@ -33,10 +38,19 @@ def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
             
             if new_state is None:
                 break
+            
+            end_time = time.time()
+            full_turn_time = end_time - start_time
+            total_ai_time += full_turn_time
+            ai_moves += 1
+            print(f"MI gājiena laiks: {full_turn_time:.2f} sekundes")
                 
             current_state = new_state
     
     cli_ui.display_game_end(current_state)
+    
+    print(f"\nKopējais MI darbības laiks: {total_ai_time:.2f} sekundes")
+    print(f"Vidējais MI gājiena laiks: {total_ai_time / ai_moves:.2f} sekundes")
 
 def process_human_turn(current_state):
     multiplier = cli_ui.get_human_move()

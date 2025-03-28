@@ -39,13 +39,7 @@ def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
 def process_human_turn(current_state):
     multiplier = cli_ui.get_human_move()
     
-    next_states = current_state.generate_next_states()
-    new_state = None
-    
-    for state in next_states:
-        if state.number == current_state.number * multiplier:
-            new_state = state
-            break
+    new_state = current_state.generate_next_state(multiplier)
     
     cli_ui.display_human_move(new_state, multiplier)
     return new_state

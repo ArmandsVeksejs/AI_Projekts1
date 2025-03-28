@@ -10,6 +10,7 @@ class GameState:
     def __repr__(self):
         return f"Skaitlis={self.number}, Cilvēka punkti={self.human_score}, Datora punkti={self.ai_score}, Dziļums={self.depth}, Vai cilvēka gājiens={self.is_human_turn}"
     
+    # AI izmanto šo
     def generate_next_states(self):
         next_states = []
         for multiplier in [2,3]:
@@ -26,6 +27,21 @@ class GameState:
                 )
             )
         return next_states
+    
+    # Cilvēks izmanto šo
+    def generate_next_state(self, multiplier):
+        
+        new_number = self.number * multiplier
+        new_human_score, new_ai_score = self.calculate_scores(new_number)
+        
+        return GameState(
+            new_number,
+            human_score=new_human_score,
+            ai_score=new_ai_score,
+            depth=self.depth + 1,
+            is_human_turn=not self.is_human_turn,
+            parent=self
+        )
     
     def calculate_scores(self, new_number):
         if new_number % 2 == 0:

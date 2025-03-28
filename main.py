@@ -7,11 +7,20 @@ Spēles apraksts:
 Papildu prasības programmatūrai:
     Spēles sākumā cilvēks-spēlētājs izvēlas, ar kuru skaitli diapazonā no 5 līdz 15 sākt spēli. 
 """
+
 import tkinter as tk
 from game import GameEngine
 from GUI import GUI
 
 def main():
+
+    """ Ja grib palaist CLI print tree """
+    # initial_state = GameState(number=7)
+    # max_depth = 3
+    # print("Spēles koks:")
+    # print_game_tree(initial_state, max_depth)
+
+    """Ja grib palaist GUI"""
     root = tk.Tk()
     app = GUI (root)
     root.mainloop()

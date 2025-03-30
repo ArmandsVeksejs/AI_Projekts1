@@ -8,16 +8,23 @@ class gui:
         self.root = root
         self.root.title("Spēle")
         self.root.geometry("800x600")
-        self.create_setup_panel()
         self.human_wins = 0
         self.ai_wins = 0
         self.draws = 0
         self.result_recorded = False
+        self.create_setup_panel()
 
     # Sākuma logs
     def create_setup_panel(self):
         self.setup_frame = tk.Frame(self.root, padx=20, pady=20)
         self.setup_frame.pack(expand=True)
+        self.win_counter_label = tk.Label(
+            self.setup_frame,
+            text=f"Uzvaras: Tu: {self.human_wins}   Dators: {self.ai_wins}   Neizšķirti: {self.draws}",
+            font=("Arial", 12),
+            relief="groove", bd=2, padx=10, pady=5
+        )
+        self.win_counter_label.grid(row=6, column=0, columnspan=2, pady=(10, 10))
         self.create_title()
         self.create_description()
         self.create_number_selection()
@@ -41,7 +48,7 @@ class gui:
     def create_description(self):
         description_text = tk.Text(
             self.setup_frame,
-            height=8,
+            height=12,
             width=70,
             wrap=tk.WORD,
             padx=10,
@@ -151,6 +158,7 @@ class gui:
     
     def back_to_menu(self):
         self.game_frame.destroy()
+        self.result_recorded = False
         self.create_setup_panel()
 
     
@@ -166,6 +174,9 @@ class gui:
         # Punkti
         self.points_label = tk.Label(self.game_frame, text=self.get_points_text(), font=("Arial", 14))
         self.points_label.pack(pady=5)
+
+        self.ai_thinking_time_label = tk.Label(self.game_frame, text="", font=("Arial", 12))
+        self.ai_thinking_time_label.pack(pady=5)
 
         # Gājiena pogas
         self.move_buttons = tk.Frame(self.game_frame)
@@ -216,15 +227,12 @@ class gui:
             self.final_points_label = tk.Label(self.game_frame, text=self.get_points_text(), font=("Arial", 14), relief="groove", bd=2, padx=10, pady=5)
             self.final_points_label.pack(pady=5)
 
-            self.win_counter_label = tk.Label(
-                self.game_frame, 
-                text=f"Uzvaras: Tu: {self.human_wins}   Dators: {self.ai_wins}   Neizšķirti: {self.draws}",
-                font=("Arial", 13),
-                relief="groove", bd=2, padx=10, pady=5
-            )
-            self.win_counter_label.pack(pady=5)
-
             self.create_end_buttons()
+
+        if hasattr(self, "win_counter_label") and self.win_counter_label.winfo_exists():
+            self.win_counter_label.config(
+                text=f"Uzvaras: Tu: {self.human_wins}   Dators: {self.ai_wins}   Neizšķirti: {self.draws}"
+            )
 
     
     # Spēles beigu darbības
@@ -249,8 +257,11 @@ class gui:
 
     def loop_ai_turn(self):
         if not self.state.is_human_turn and self.state.number < 1000:
+            import time
+            start_time = time.time()
             best_score = float('-inf')
             best_state = None
+
             if self.algorithm == "minimax":
                 score, best_state = minimax(5, self.state, True)
             else:
@@ -263,6 +274,11 @@ class gui:
                         break
             if best_state:
                 self.state = best_state
+            
+            end_time = time.time()
+            thinking_time = end_time - start_time
+            self.ai_thinking_time_label.config(text=f"Datora laiks: {thinking_time:.4f} sekundes")
+            
             self.update_ui()
             if not self.state.is_human_turn and self.state.number < 1000:
                 self.root.after(500, self.loop_ai_turn)

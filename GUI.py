@@ -12,6 +12,7 @@ class gui:
         self.ai_wins = 0
         self.draws = 0
         self.result_recorded = False
+        self.total_ai_time = 0
         self.create_setup_panel()
 
     # Sākuma logs
@@ -220,12 +221,16 @@ class gui:
 
         if self.state.number >= 1000:
             self.move_buttons.pack_forget()
+            self.ai_thinking_time_label.pack_forget()
 
             self.result_label = tk.Label(self.game_frame, text=self.get_winner_text(), font=("Arial", 22, "bold"), fg="white", padx=10, pady=5)
             self.result_label.pack(pady=10)
 
             self.final_points_label = tk.Label(self.game_frame, text=self.get_points_text(), font=("Arial", 14), relief="groove", bd=2, padx=10, pady=5)
             self.final_points_label.pack(pady=5)
+
+            self.ai_total_time_label = tk.Label(self.game_frame, text=f"Kopējais datora laiks: {self.total_ai_time:.4f} sekundes", font=("Arial", 14), relief="groove", bd=2, padx=10, pady=5)
+            self.ai_total_time_label.pack(pady=5)
 
             self.create_end_buttons()
 
@@ -277,6 +282,7 @@ class gui:
             
             end_time = time.time()
             thinking_time = end_time - start_time
+            self.total_ai_time += thinking_time
             self.ai_thinking_time_label.config(text=f"Datora laiks: {thinking_time:.4f} sekundes")
             
             self.update_ui()

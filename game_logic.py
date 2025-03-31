@@ -92,9 +92,9 @@ def get_best_move(state: GameState, depth: int, use_minimax: bool, use_alpha_bet
     best_state = None
     for child in state.generate_next_states():
         if use_alpha_beta:
-            move_child_score = algoritmi.alpha_beta(depth - 1, child, False, algoritmi.MIN, algoritmi.MAX)
+            move_child_score = algoritmi.alpha_beta(depth - 1, child, True, algoritmi.MIN, algoritmi.MAX)
         elif use_minimax:
-            move_child_score, _ = algoritmi.minimax(depth - 1, child, False)
+            move_child_score, _ = algoritmi.minimax(depth - 1, child, True)
         else:
             raise ValueError("Kļūda! Ievadi 2 vai 3!!!")
 

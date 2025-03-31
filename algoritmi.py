@@ -13,7 +13,7 @@ def get_nodes_visited():
 
 def minimax(depth, state: GameState, maximizing_player: bool):
     global nodes_visited
-    nodes_visited += 1  # Increment counter for each state evaluated
+    nodes_visited += 1
     
     if state.number >= 1000 or depth == 0:
         return heuristic(state), None
@@ -40,7 +40,7 @@ def minimax(depth, state: GameState, maximizing_player: bool):
 
 def alpha_beta(depth, state: GameState, maximizing_player: bool, alpha, beta):
     global nodes_visited
-    nodes_visited += 1  # Increment counter for each state evaluated
+    nodes_visited += 1
     
     if state.number >= 1000 or depth == 0:
         return heuristic(state)

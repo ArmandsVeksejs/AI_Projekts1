@@ -3,18 +3,18 @@ import tkinter as tk
 from GUI import gui
 
 def main():
-    # initial_state, max_depth, use_alpha_beta, use_minimax = initialize_game()
-    #
-    # run_game_loop(
-    #     initial_state,
-    #     max_depth,
-    #     use_alpha_beta,
-    #     use_minimax
-    # )
+    initial_state, max_depth, use_alpha_beta, use_minimax = initialize_game()
     
-    root = tk.Tk()
-    app = gui(root)
-    root.mainloop()
+    run_game_loop(
+        initial_state,
+        max_depth,
+        use_alpha_beta,
+        use_minimax
+    )
+    
+    # root = tk.Tk()
+    # app = gui(root)
+    # root.mainloop()
 
 if __name__ == "__main__":
     main()

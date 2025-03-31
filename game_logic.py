@@ -7,7 +7,7 @@ def initialize_game():
     initial_number = cli_ui.get_starting_number()
     is_human_turn = cli_ui.get_starting_player()
     initial_state = GameState(number=initial_number, is_human_turn=is_human_turn)
-    max_depth = 7
+    max_depth = 4
     
     # Comment/uncomment as needed to show game tree
     # cli_ui.display_game_tree(initial_state, max_depth)
@@ -15,6 +15,8 @@ def initialize_game():
     use_alpha_beta, use_minimax = cli_ui.get_algorithm_choice()
     
     cli_ui.display_initial_state(initial_state)
+
+    algoritmi.reset_nodes_visited()
     
     return initial_state, max_depth, use_alpha_beta, use_minimax
 
@@ -22,11 +24,14 @@ def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
     current_state = initial_state
     total_ai_time = 0
     ai_moves = 0
+    total_nodes_visited = 0
     
     while current_state.number < 1000:
         if current_state.is_human_turn:
             current_state = process_human_turn(current_state)
         else:
+            algoritmi.reset_nodes_visited()
+            
             start_time = time.time()
             
             new_state = process_ai_turn(
@@ -41,16 +46,19 @@ def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
             
             end_time = time.time()
             full_turn_time = end_time - start_time
+            
+            nodes_visited = algoritmi.get_nodes_visited()
+            total_nodes_visited += nodes_visited
+            
             total_ai_time += full_turn_time
             ai_moves += 1
-            print(f"MI gājiena laiks: {full_turn_time:.2f} sekundes")
                 
             current_state = new_state
     
     cli_ui.display_game_end(current_state)
     
-    print(f"\nKopējais MI darbības laiks: {total_ai_time:.2f} sekundes")
-    print(f"Vidējais MI gājiena laiks: {total_ai_time / ai_moves:.2f} sekundes")
+    print(f"\nVidējais datora gājiena laiks: {total_ai_time / ai_moves:.2f} sekundes")
+    print(f"Kopējais apmeklēto virsotņu skaits: {total_nodes_visited}")
 
 def process_human_turn(current_state):
     multiplier = cli_ui.get_human_move()

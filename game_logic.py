@@ -56,7 +56,7 @@ def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
             ai_moves += 1
             
             print(f"MI gājiena laiks: {full_turn_time:.2f} sekundes")
-            print(f"Apmeklēto mezglu skaits šajā gājienā: {nodes_visited}")
+            print(f"Apmeklēto virsotņu skaits šajā gājienā: {nodes_visited}")
                 
             current_state = new_state
     
@@ -64,8 +64,8 @@ def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
     
     print(f"\nKopējais MI darbības laiks: {total_ai_time:.2f} sekundes")
     print(f"Vidējais MI gājiena laiks: {total_ai_time / ai_moves:.2f} sekundes")
-    print(f"Kopējais apmeklēto mezglu skaits: {total_nodes_visited}")
-    print(f"Vidējais apmeklēto mezglu skaits vienā gājienā: {total_nodes_visited / ai_moves:.2f}")
+    print(f"Kopējais apmeklēto virsotņu skaits: {total_nodes_visited}")
+    print(f"Vidējais apmeklēto virsotņu skaits vienā gājienā: {total_nodes_visited / ai_moves:.2f}")
 
 def process_human_turn(current_state):
     multiplier = cli_ui.get_human_move()

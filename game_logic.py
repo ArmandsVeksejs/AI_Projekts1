@@ -30,7 +30,6 @@ def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
         if current_state.is_human_turn:
             current_state = process_human_turn(current_state)
         else:
-            # Reset nodes count before AI move
             algoritmi.reset_nodes_visited()
             
             start_time = time.time()
@@ -48,7 +47,6 @@ def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
             end_time = time.time()
             full_turn_time = end_time - start_time
             
-            # Get nodes visited during this move
             nodes_visited = algoritmi.get_nodes_visited()
             total_nodes_visited += nodes_visited
             

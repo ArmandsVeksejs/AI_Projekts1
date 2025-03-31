@@ -20,13 +20,8 @@ def get_starting_player():
             print("Nederīga ievade. Lūdzu, ievadi 1 vai 2.")
 
 def get_algorithm_choice():
-    print("Izvēlies algoritmu:")
-    print("1 - Alpha-Beta")
-    print("2 - Minimax")
-    
     while True:
-        algorithm_choice = input("Ievadi 1 vai 2: ").strip()
-        
+        algorithm_choice = input("Kur algoritmu vēlies lietot? (1 - AlfaBeta, 2 - MiniMax): ").strip()
         if algorithm_choice == "1":
             use_alpha_beta = True
             use_minimax = False
@@ -51,14 +46,13 @@ def get_human_move():
             print("Nederīga ievade. Lūdzu, ievadi 2 vai 3.")
 
 def display_human_move(state, multiplier):
-    print(f"Tavs gājiens: {state.number} (reizinātājs: {multiplier}, Cilvēka punkti={state.human_score}, Datora punkti={state.ai_score})")
+    print(f"Skaitlis: {state.number} (reizinātājs: {multiplier}, Cilvēka punkti={state.human_score}, Datora punkti={state.ai_score})")
 
 def prompt_for_ai_move():
-    input("\nVai vēlies redzēt datora gājienu? (spied Enter, lai turpinātu) ")
     print("\nDatora gājiens...")
 
 def display_ai_move(state, multiplier):
-    print(f"Datora gājiens: {state.number} (reizinātājs: {multiplier}, Cilvēka punkti={state.human_score}, Datora punkti={state.ai_score})")
+    print(f"Skaitlis: {state.number} (reizinātājs: {multiplier}, Cilvēka punkti={state.human_score}, Datora punkti={state.ai_score})")
 
 def display_game_end(state):
     print("\nSpēle beigusies!")

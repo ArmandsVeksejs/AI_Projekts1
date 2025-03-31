@@ -57,7 +57,7 @@ def run_game_loop(initial_state, max_depth, use_alpha_beta, use_minimax):
     
     cli_ui.display_game_end(current_state)
     
-    print(f"\nVidējais datora gājiena laiks: {total_ai_time / ai_moves:.2f} sekundes")
+    print(f"\nVidējais datora gājiena laiks: {total_ai_time / ai_moves:.6f} sekundes")
     print(f"Kopējais apmeklēto virsotņu skaits: {total_nodes_visited}")
 
 def process_human_turn(current_state):

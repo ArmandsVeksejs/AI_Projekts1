@@ -31,7 +31,6 @@ class gui:
         self.create_player_selection()
         self.create_algorithm_selection()
         self.create_start_button()
-        #self.create_autoplay_button()
         self.create_exit_button()
 
     # Row 1
@@ -122,18 +121,10 @@ class gui:
         start_button.grid(row=5, column=0, pady=(20, 0), padx=(0, 5), sticky="e")
 
     # Row 7
-    """
-    def create_autoplay_button(self):
-        autoplay_button = tk.Button(self.setup_frame, text="Ļaut datoram spēlēt", bg="#FF9800", fg="black", padx=10, pady=5, width=25)
-        # Nonemu command (command=self.autoplay_game) parametru.
-        autoplay_button.grid(row=6, column=0, columnspan=2, pady=(10, 0))
-    """
-    # Row 8
     def create_exit_button(self):
         exit_button = tk.Button(self.setup_frame, text="Beigt spēli", command=self.root.quit, bg="#f44336", fg="black", padx=10, pady=5, width=25)
         exit_button.grid(row=5, column=1, pady=(20, 0), padx=(5, 0), sticky="w")
 
-    
     # Spēles sākšana
     def start_game(self):
         starting_number = self.number_scale.get()
@@ -174,9 +165,6 @@ class gui:
         # Punkti
         self.points_label = tk.Label(self.game_frame, text=self.get_points_text(), font=("Arial", 14))
         self.points_label.pack(pady=5)
-
-        self.ai_thinking_time_label = tk.Label(self.game_frame, text="", font=("Arial", 12))
-        self.ai_thinking_time_label.pack(pady=5)
 
         # Gājiena pogas
         self.move_buttons = tk.Frame(self.game_frame)
@@ -257,8 +245,6 @@ class gui:
 
     def loop_ai_turn(self):
         if not self.state.is_human_turn and self.state.number < 1000:
-            import time
-            start_time = time.time()
             best_score = float('-inf')
             best_state = None
 
@@ -274,10 +260,6 @@ class gui:
                         break
             if best_state:
                 self.state = best_state
-            
-            end_time = time.time()
-            thinking_time = end_time - start_time
-            self.ai_thinking_time_label.config(text=f"Datora laiks: {thinking_time:.4f} sekundes")
             
             self.update_ui()
             if not self.state.is_human_turn and self.state.number < 1000:

@@ -9,7 +9,7 @@ def initialize_game():
     initial_state = GameState(number=initial_number, is_human_turn=is_human_turn)
     max_depth = 4
     
-    # Comment/uncomment as needed to show game tree
+    # Comment/uncomment as needed to show game tree in the shell
     # cli_ui.display_game_tree(initial_state, max_depth)
     
     use_alpha_beta, use_minimax = cli_ui.get_algorithm_choice()

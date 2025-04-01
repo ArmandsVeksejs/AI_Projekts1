@@ -1,5 +1,8 @@
 # Instrukcijas
 
+## Programmas izmantošana
+1. Lejupielādējiet projektu un palaižat `main.py` failu.
+
 ## Darba sākšana
 
 ### 1. Lejupielādējiet projektu (Clone)

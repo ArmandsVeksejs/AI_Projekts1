@@ -1,9 +1,9 @@
 # Instrukcijas
 
-## Programmas izmantošana
+## Programmas izmantošana vērtētājam
 1. Lejupielādējiet projektu un palaižat `main.py` failu.
 
-## Darba sākšana
+## Programmēšanas sākšana projekta veicējiem
 
 ### 1. Lejupielādējiet projektu (Clone)
 ```
